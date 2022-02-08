@@ -23,7 +23,7 @@ services:
     container_name: posa1
     command: >
       sh -c "cd ~/
-            /openethereum/target/release/openethereum --config /openethereum/config.toml"
+            /openethereum/target/release/openethereum --config /openethereum/config.toml -ltxqueue=trace"
     working_dir: /openethereum
 
   posa2:
@@ -47,7 +47,7 @@ services:
     container_name: posa2
     command: >
       sh -c "cd ~/
-            /openethereum/target/release/openethereum --config /openethereum/config.toml"
+            /openethereum/target/release/openethereum --config /openethereum/config.toml "
     working_dir: /openethereum
 
   posa3:
@@ -126,6 +126,7 @@ services:
     command : bash -c "/wait-for-it.sh -h mongo -p 27017 -t 30 -- npm run start"
   
   db:
+    container_name: db
     image: "mongo"
     depends_on:
       - posa1
@@ -134,8 +135,9 @@ services:
       - posa4
     ports: 
       - 27017:27017
+    restart: always
     volumes:
       - ./data:/data/db
     environment:
       MONGO_INITDB_DATABASE: "[blockDB]"
-    container_name: db
+    

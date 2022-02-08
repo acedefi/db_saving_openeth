@@ -9,9 +9,9 @@
     "patchBlocks":  100,
     "bulkSize":     100,
     "settings": {
-        "symbol": "ACT",
-        "name": "ACT_COIN",
-        "title": "ACT Coin Block Explorer",
+        "symbol": "ACE",
+        "name": "ACE_COIN",
+        "title": "ACE Coin Block Explorer",
         "author": "Elaine, Cody, Hackmod, Bakon",
         "contact": "mailto:ethereumclassicanthony@gmail.com",
         "about": "This is an open source Blockchain Explorer.",
