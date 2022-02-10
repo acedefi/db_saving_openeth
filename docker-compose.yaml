@@ -20,10 +20,11 @@ services:
       - ./password:/openethereum/password
       - ./nodes:/openethereum/nodes
       - ./keys1/ethereum:/openethereum/keys
+      - ./dataopenethereum:/openethereum/chains/ethereum/db
     container_name: posa1
     command: >
       sh -c "cd ~/
-            /openethereum/target/release/openethereum --config /openethereum/config.toml -ltxqueue=trace"
+            /openethereum/target/release/openethereum --config /openethereum/config.toml -ltxqueue=trace --pruning=archive"    
     working_dir: /openethereum
 
   posa2:
@@ -98,46 +99,45 @@ services:
             /openethereum/target/release/openethereum --config /openethereum/config.toml"
     working_dir: /openethereum
 
-  scan:
-    image: "nara7875/acentscan:17"
-    ports:
-      - 3013:3000
-    restart: always
-    container_name: scan
-    depends_on:
-      - db
-    volumes:
-      - ./config1.json:/config.json
-    extra_hosts:
-      - "host.docker.internal:host-gateway"
-    environment:
-      MONGO_URI: mongodb://host.docker.internal/blockDB
-    command : bash -c "/wait-for-it.sh -h mongo -p 27017 -t 30 -- npm run start"
+  # scan:
+  #   image: "nara7875/acentscan:17"
+  #   ports:
+  #     - 3013:3000
+  #   restart: always
+  #   container_name: scan
+  #   depends_on:
+  #     - db
+  #   volumes:
+  #     - ./config1.json:/config.json
+  #   extra_hosts:
+  #     - "host.docker.internal:host-gateway"
+  #   environment:
+  #     MONGO_URI: mongodb://host.docker.internal/blockDB
+  #   command : bash -c "/wait-for-it.sh -h mongo -p 27017 -t 30 -- npm run start"
 
-  faucet:
-    image: "nara7875/acentfaucet:2"
-    ports:
-      - 3014:3001
-    restart: always
-    container_name: faucet
-    volumes:
-      - ./config.json:/config.json
-      - ./.env:/.env
-    command : bash -c "/wait-for-it.sh -h mongo -p 27017 -t 30 -- npm run start"
+  # faucet:
+  #   image: "nara7875/acentfaucet:2"
+  #   ports:
+  #     - 3014:3001
+  #   restart: always
+  #   container_name: faucet
+  #   volumes:
+  #     - ./config.json:/config.json
+  #     - ./.env:/.env
+  #   command : bash -c "/wait-for-it.sh -h mongo -p 27017 -t 30 -- npm run start"
   
-  db:
-    container_name: db
-    image: "mongo"
-    depends_on:
-      - posa1
-      - posa2
-      - posa3
-      - posa4
-    ports: 
-      - 27017:27017
-    restart: always
-    volumes:
-      - ./data:/data/db
-    environment:
-      MONGO_INITDB_DATABASE: "[blockDB]"
+  # db:
+  #   image: "mongo"
+  #   depends_on:
+  #     - posa1
+  #     - posa2
+  #     - posa3
+  #     - posa4
+  #   ports: 
+  #     - 27017:27017
+  #   # restart: always
+  #   volumes:
+  #     - ./data:/data/db
+  #   environment:
+  #     MONGO_INITDB_DATABASE: "[blockDB,explorerDB]"
     

@@ -17,17 +17,17 @@ cors = ["all"]
 [websockets]
 disable = false
 port = 10646
-interface = "all"
 origins = ["none"]
 apis = ["all"]
 hosts = ["all"]
+interface = "local"
 
 [account]
 password = ["/openethereum/password"] 
 
 [mining]
 engine_signer = "0x6ec63098aa253fe2d1c003d88f8bbadd6807ff0c"  
-gas_floor_target = "40000000"
+gas_floor_target = "400000000"
 reseal_on_txs = "none" 
 usd_per_tx = "0" 
 force_sealing = true

@@ -19,7 +19,7 @@ password = ["/openethereum/password"]
 
 [mining]
 engine_signer = "0xfdc352aa9a01688284f42d29c009db55370c17ea"  
-gas_floor_target = "40000000"
+gas_floor_target = "400000000"
 reseal_on_txs = "none" 
 usd_per_tx = "0" 
 force_sealing = true
